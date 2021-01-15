@@ -29,6 +29,8 @@ myMean <- function(assignment2) {
 }
 #tested <- myMean(assignment2)
 ```
+<br>
+
 #### Discussion
 
 The code as provided will ultimately cause two errors:

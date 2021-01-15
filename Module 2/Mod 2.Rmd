@@ -1,0 +1,70 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+#### The provided dataset
+
+`assignment2 <- c(16, 18, 14, 22, 27, 17, 19, 17, 17, 22, 20, 22)`
+```{r }
+assignment2 <- c(16, 18, 14, 22, 27, 17, 19, 17, 17, 22, 20, 22)
+```
+<br>
+
+#### The provided code
+
+`myMean <- function(assignment2) { return( sum(assignment) / length(someData) )}`
+```{r }
+myMean <- function(assignment2) { 
+    
+    # commented out due to error:
+    # return(sum(assignment)/length(someData)) 
+    
+    # corrected version:
+    return(sum(assignment2)/length(assignment2))
+    
+}
+#tested <- myMean(assignment2)
+```
+#### Discussion
+
+The code as provided will ultimately cause two errors:
+
+* <span style="color:red">Error in myMean(assignment2) : object 'assignment' not found</span>
+* <span style="color:red">Error in myMean(assignment2) : object 'someData' not found</span>
+</span>
+<br>
+
+The code is intended to calculate the average of the dataset through a 
+user-defined function. The two errors indicate that the function is
+attempting to access two unknown or undeclared variables:
+`assignment` and `someData`. Both unknowns should be replaced with
+the function's receiving argument: `assignment2`.
+<br>
+
+So, corrected...the function now reads:
+<br><br>
+`myMean <- function(assignment2) { return( sum(assignment2) / length(assignment2) )}`
+<br><br>
+
+The call `myMean(assignment2)` will return `myMean` as: **`r myMean(assignment2)`**.
+<br>
+
+Sanity check, the built-in `mean {base}` function call of `mean(assignment2)`
+returns: **`r mean(assignment2)`**.
+<br>
+
+
+<br><br>
+Reference: 
+
+* Matloff, *The Art of R Programming*, section 1.3
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%202">Git Me</a>
+<br><br>
+

@@ -35,7 +35,6 @@ The code as provided will ultimately cause two errors:
 
 * <span style="color:red">Error in myMean(assignment2) : object 'assignment' not found</span>
 * <span style="color:red">Error in myMean(assignment2) : object 'someData' not found</span>
-</span>
 <br>
 
 The code is intended to calculate the average of the dataset through a 

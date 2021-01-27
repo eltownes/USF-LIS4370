@@ -1,0 +1,82 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+#### The provided data
+
+`names <- c("Jeb", "Donald", "Ted", "Marco", "Carly", "Hillary", "Bernie")`  
+`abcPoll <- c(4, 62, 51, 21, 2, 14, 15)`  
+`cbsPoll <- c(12, 75, 43, 19, 1, 21, 19)`
+```{r }
+names <- c("Jeb", "Donald", "Ted", "Marco", "Carly", "Hillary", "Bernie" )
+abcPoll <- c(4, 62, 51, 21, 2, 14, 15)
+cbsPoll <- c(12, 75, 43, 19, 1, 21, 19)
+```
+<br>
+
+#### The data.frame
+
+`pollResult <- data.frame(names,abcPoll,cbsPoll)`
+```{r }
+pollResult <- data.frame(names,abcPoll,cbsPoll)
+str(pollResult)
+pollResult
+```
+<br>
+
+#### Let's determine the rank order for `names`. There are two possibilities.
+<br>
+
+##### (1) Ranking: simple average
+
+Caveat: potential issue.
+
+```{r }
+avgPolls <- (abcPoll+cbsPoll)*.5
+pollResult <- cbind(pollResult,avgPolls)
+pollResult[ order(-avgPolls), ]
+colSums( pollResult[2:3] )
+```
+<br>
+
+Here we see the ranking sorted by `avgPolls`.  
+What is the issue? The `abcPoll` and the `cbsPoll` have different raw totals -
+169 vs 190. Probably due to different polling methodologies. Now, looking
+at this small dataset...probably not a big deal
+but, it could pose problems with larger datasets.  
+Let's consider a proportional perspective.  
+<br>
+
+##### (2) Ranking: proportional
+
+As (1) above but using `prop.table` first. Kind of normalizing the data?  
+
+```{r }
+prop_abc <- prop.table(abcPoll)
+prop_cbs <- prop.table(cbsPoll)
+propFrame <- data.frame(names,prop_abc,prop_cbs)
+
+avgProps <- (prop_abc+prop_cbs)*.5
+propResult <- cbind(propFrame,avgProps)
+propResult[ order(-avgProps), ]
+
+colSums( propFrame[2:3] )
+```
+<br>
+
+The `prop_abc` and `prop_cbs` should add to 1...good.  
+<br>
+In this case, there is no difference in ranking when using a simple average
+versus a proportional ranking. Maybe something to be watchful for the next
+time.
+
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%203">Git Me</a>
+<br><br>
+

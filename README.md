@@ -8,3 +8,4 @@ Blog lives at https://et-lis4370.blogspot.com/ .
 
 * Module 2: Functions
 * Module 3: data.frame
+* MOdule 4: Programming Structure

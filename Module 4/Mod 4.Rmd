@@ -1,0 +1,104 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+#### The provided dataset - raw
+
+`freqRaw <- c( ".6",".3",".4",".4",".2",".6",".3",".4",".9",".2" )`  
+`bpRaw <- c( "103","87","32","42","59","109","78","205","135","176" )`  
+`visit_1Raw <- c( "bad","bad","bad","bad","good","good","good","good","NA","bad")`  
+`visit_2Raw <- c( "low","low","high","high","low","low","high","high","high","high" )`  
+`visit_3Raw <- c( "low","high","low","high","low","high","low","high","high","high" )`
+
+Notes:
+
+* freq is frequency in the last 12 months e.g. freq of
+    .3 equals .3*12=4 visits during the last 12 months
+* bp is blood pressure  
+* visit_x indicates assessment number  
+* visits need to be re-encoded for numeric designations:  
+    * 0: good or low
+    * 1: bad or high  
+
+<br>
+
+#### Transform
+
+Let's transform the data from strings to numbers and re-encode the visits
+using conditional statements and a loop within a function.
+
+```{r warning=FALSE}
+freqRaw <- c( ".6",".3",".4",".4",".2",".6",".3",".4",".9",".2" )
+bpRaw <- c( "103","87","32","42","59","109","78","205","135","176" )
+visit_1Raw <- c( "bad","bad","bad","bad","good","good","good","good","NA","bad")
+visit_2Raw <- c( "low","low","high","high","low","low","high","high","high","high" )
+visit_3Raw <- c( "low","high","low","high","low","high","low","high","high","high" )
+
+freq <- as.numeric( freqRaw )
+bp <- as.integer( bpRaw )
+
+replaceOldNew <- function(vect,old1,new1,old2,new2){
+    for (i in 1:length(vect)){
+        if (vect[i]==old1) vect[i]=new1
+        if (vect[i]==old2) vect[i]=new2
+    }
+    return ( as.numeric(vect) )
+}
+
+visit_1 <- replaceOldNew(visit_1Raw,"bad",1,"good",0)
+visit_2 <- replaceOldNew(visit_2Raw,"low",0,"high",1)
+visit_3 <- replaceOldNew(visit_3Raw,"low",0,"high",1)
+
+df <- data.frame( freq,bp,visit_1,visit_2,visit_3 )
+df
+
+```
+<br>
+
+#### Quick EDA
+
+Boxplot of bloodpressure and Histogram of patient visits last 12 months.
+
+```{r }
+par(mfrow=c(1,2))
+boxplot( df$bp , main="Blood Pressure" )
+hist( df$freq*12 , main="Visits" , xlab="Months" , ylab="Patients" )
+```
+<br>
+
+A summary of blood pressure.
+```{r }
+summary( df$bp )
+```
+<br>
+
+#### BPs & MDs Ratings
+
+There appears to be more of an agreement when blood pressure readings are
+in the mid-range. Per the histogram somewhere between 50 and 150 - this 
+includes rounding considerations.
+
+```{r }
+total <- rowSums( cbind(df$visit_1,df$visit_2,df$visit_3), na.rm=TRUE )
+df <- cbind(df,total)
+hist( df$bp , main="BP Reading Congruence" , xlab="Blood Pressure" , ylab="Doctors"  )
+```
+<br>
+
+A bin width of 10 creates the following histogram.
+
+```{r }
+hist( df$bp , breaks=10, main="BP Reading Congruence" , xlab="Blood Pressure" , ylab="Doctors"  )
+```
+<br>
+
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%204">Git Me</a>
+<br><br>
+

@@ -1,0 +1,49 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+#### Two matrices
+
+`A <- matrix(1:100, nrow=10)`  
+`B <- matrix(1:1000, nrow=10)`
+
+```{r }
+A <- matrix(1:100, nrow=10)  
+B <- matrix(1:1000, nrow=10)
+```
+<br>
+
+##### Determinants and Inverses
+
+For matrix A: `det(A)`
+
+```{r}
+det(A)
+```
+The determinant for A is 0 which means that A has no inverse.
+<br><br>
+
+
+For matrix B: `det(B)` or `solve(B)`
+
+```{r}
+#det(B)
+#solve(B)
+```
+Errors out with either:
+
+* <span style="color:red">Error in determinant.matrix(x, logarithm = TRUE, ...) : 'x' must be a square matrix</span>
+* <span style="color:red">Error in solve.default(B) : 'a' (10 x 100) must be square</span>
+<br>
+
+
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%205">Git Me</a>
+<br><br>
+

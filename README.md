@@ -10,3 +10,4 @@ Blog lives at https://et-lis4370.blogspot.com/ .
 * Module 3: data.frame
 * Module 4: Programming Structure
 * Module 5: Matrices
+* Module 6: Matrices II

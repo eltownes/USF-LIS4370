@@ -12,3 +12,4 @@ Blog lives at https://et-lis4370.blogspot.com/ .
 * Module 5: Matrices
 * Module 6: Matrices II
 * Module 7: OOP
+* Module 8: I/O

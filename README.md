@@ -13,3 +13,4 @@ Blog lives at https://et-lis4370.blogspot.com/ .
 * Module 6: Matrices II
 * Module 7: OOP
 * Module 8: I/O
+* Module 9: Visualization

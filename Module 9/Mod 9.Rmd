@@ -1,0 +1,156 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+
+### Set environment
+```{r message=0, results='hide'}
+env <- c("readr","tidyverse","lubridate","lattice","ggplot2")
+lapply(env, library, character.only = 1)
+```
+<br>
+
+
+### Load, clean, tidy, & inspect dataset - "TechStocks.csv"
+
+```{r }
+# read in data
+stocks.tmp <- read_csv("TechStocks.csv", col_names = TRUE) %>%
+    mutate(Day = t) %>%
+    mutate(Date_chr = Date) %>%
+    mutate(Date_lub = mdy(Date)) %>%
+    select(Day,Date_chr,Date_lub,AAPL,GOOG,MSFT)
+
+# pivot to tidy the data
+stocks <- stocks.tmp %>%
+    pivot_longer(cols=c("AAPL","GOOG","MSFT"),
+                 names_to = "Symbol", values_to = "Price" )
+
+# inspect the data
+glimpse(stocks)
+summary(stocks)
+```
+<br>
+
+This is a dataset of AAPL, GOOG, and MSFT stock prices from 1 December 2015 
+to 1 December 2017. A time-series plot will be appropriate here.  
+
+`Date_chr` is the date as character type (imported).  
+`Date_lub` is the date as lubridate type.
+
+<br>
+
+### Base graphics
+
+Base graphics provides the basics of graphics in R.  
+It is probably best used when exploring datasets as the call is
+very simple - a call to `plot`.  
+
+```{r }
+# simple plot
+plot(Price ~ Day, data=stocks)
+```
+<br>
+
+This is quite messy because the data is plotted on the same chart and uses the
+same price scale. Let's look at just AAPL.
+
+```{r }
+# filter then plot
+stocks %>% filter(Symbol=="AAPL") %>%
+    plot(Price ~ Day, data=.)
+```
+<br>
+
+Base graphics can be enhanced but it takes more effort and parameters can 
+appear a bit cryptic e.g. usage of `cex`, `yaxt`, or `las`. The workflow can 
+also be awkward when comparing/creating related plots as in this case with 3 
+tech stocks. Each plot must be rendered individually which can create charting
+inconsistencies. Also, a legend will have to be manually created.  
+
+Still, some simple enhancements can be made as shown below.
+
+```{r }
+# pipe stocks and build the plot
+stocks %>% filter(Symbol=="AAPL") %>%
+    plot(Price ~ Day, cex = 0.25, yaxt="none", data=., 
+        main="AAPL", col.main="blue",
+        xlab="Days (starts on 12-1-2015)", ylab="Price"
+        )
+axis(2, seq(0,200,25),las=2)
+abline( lm(AAPL ~ Day, data=stocks.tmp) )
+```
+<br>
+
+
+### Lattice
+
+Lattice provides several high-level functions. The `xyplot` is one 
+type and is great for time-series plots. A simply call to `xyplot` looks
+very much like a call to `plot` but its default formatting is much better.
+
+```{r }
+# pipe and filter to plot
+stocks %>% filter(Symbol=="AAPL") %>%
+    xyplot(Price ~ Day, data=.)
+```
+<br>
+
+Lattice makes it easy to do a comparison. **Key to note here is that 
+`scales = "free"` has been set**. Without it we end with the same scaling 
+problem as above. However, with 'free scales' **it could introduce a misleading interpretation**.
+
+```{r }
+# straight plot
+xyplot(Price ~ Day | Symbol, cex = 0.25, data=stocks,
+       group = Symbol,
+       type = c("p", "smooth"),
+       scales = "free",
+       main="Stocks (on free scales)", col.main="blue",
+        xlab="Days (starts on 12-1-2015)", ylab="Price"
+       )
+```
+<br>
+
+
+### GGPLOT2
+
+GGPLOT uses the Grammar of Graphics approach which identifies 7 layers: 
+data, aesthetics, geometries, facets, statistics, coordinates, and themes.
+This provides a systematic way to create a visualization.
+
+We'll plot the same 3 tech stocks but instead we'll plot NOT price but
+instead the percentage increase since 1 December 2015. The result should be
+similar to the side-by-side comparison above but now we'll compare
+percentages and could provide for much fairer analysis.
+
+```{r }
+# create a cumulative percentage column
+stocksPerc <- stocks %>%
+    group_by(Symbol) %>%
+    mutate(Perc = ((Price - Price[1]) / Price[1]) * 100) %>%
+    ungroup()
+
+# plotting
+stocksPerc %>% ggplot( aes(x=Date_lub,y=Perc) ) + 
+    ggtitle("Stocks (percent chart)") + xlab("") + ylab("Percent") +
+    geom_point(size=0.5, col=if_else(stocksPerc$Perc<0,"red","green3") ) + 
+    facet_wrap(~Symbol) +
+    theme_light() +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1)) +
+    theme(axis.title.y = element_text(angle = 0, vjust = 0.5, hjust=1))
+```
+<br>
+
+
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%209">Git Me</a>
+<br><br>
+

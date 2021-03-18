@@ -1,0 +1,39 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+#### The DESCRIPTION file of the package.
+
+```{r engine='bash', comment=''}
+cat DESCRIPTION
+```
+<br>
+
+
+#### The usage of the MIT license requires 2 additional license files.
+##### The files were created using `use_mit_license("Eric Townes")`  
+<br>
+
+##### (1) LICENSE
+
+```{r engine='bash', comment=''}
+cat LICENSE
+```
+<br>
+
+##### (2) LICENSE.MD
+
+```{r engine='bash', comment=''}
+cat LICENSE.MD
+```
+
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%2010">Git Me</a>
+<br><br>
+

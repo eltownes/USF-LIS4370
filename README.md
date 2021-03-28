@@ -15,3 +15,4 @@ Blog lives at https://et-lis4370.blogspot.com/ .
 * Module 8: I/O
 * Module 9: Visualization
 * Module 10: Final Project - DESCRIPTION
+* Module 11: Debugging

@@ -1,0 +1,61 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+#### The provided code with the 'deliberate' bug.
+
+```{r class.source = 'fold-show', eval=FALSE}
+
+tukey_multiple <- function(x) {
+   outliers <- array(TRUE,dim=dim(x))
+   for (j in 1:ncol(x))
+    {
+    outliers[,j] <- outliers[,j] && tukey.outlier(x[,j])
+    }
+outlier.vec <- vector(length=nrow(x))
+    for (i in 1:nrow(x))
+    { outlier.vec[i] <- all(outliers[i,]) } return(outlier.vec) }
+
+```
+
+The code will first throw the following error:
+
+<span style="color:red">Error: unexpected symbol in:</span>  
+<span style="color:red">"   for (i in 1:nrow(x))</span>  
+<span style="color:red">    { outlier.vec[i] <- all(outliers[i,]) } return"</span>  
+
+Often, the first step in debugging is to re-align or re-organize the code for
+readability. In this case, the error stems from a formatting one. Specifically,
+`return` should be placed on its own line and should stand by itself.  
+
+The corrected code is shown below.
+
+```{r class.source = 'fold-show'}
+
+tukey_multiple <- function(x) {
+    
+    outliers <- array(TRUE,dim=dim(x))
+    for (j in 1:ncol(x)){
+        outliers[,j] <- outliers[,j] && tukey.outlier(x[,j])
+    }
+
+    outlier.vec <- vector(length=nrow(x))
+    for (i in 1:nrow(x)){
+        outlier.vec[i] <- all(outliers[i,])
+    }
+    return(outlier.vec)
+}
+
+```
+
+
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%2011">Git Me</a>
+<br><br>
+

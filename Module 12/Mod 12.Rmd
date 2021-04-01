@@ -32,6 +32,9 @@ From: `![R Markdown creation](screen2.png)`
 * Result: `r x = 14 ; 5 / x`  
 From: ` r x = 14 ; 5/ x `
 
+* Result: **Hello World!**  
+From: `**Hello World!`**
+
 
 <br><br>
 

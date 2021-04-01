@@ -1,0 +1,41 @@
+
+---
+output:
+    html_document:
+        code_folding: hide 
+---
+<br>
+
+#### R Markdown
+
+R makes it real easy to create Markdown files. It is as simple as navigating
+the RStudio menu system.  
+
+![R Markdown creation](screen1.png)
+<br>
+
+This creates a template with some instructions and links from which the user
+can modify the document.  
+<br>
+
+#### Examples
+
+* Result: [R Markdown site](https://rmarkdown.rstudio.com/index.html)  
+From: `[R Markdown site](https://rmarkdown.rstudio.com/index.html)`
+
+* Result: $x^2 + \frac{1}{4}x = 8$  
+From: `$x^2 + \frac{1}{4}x = 8$`
+
+* Result: ![R Markdown creation](screen2.png)  
+From: `![R Markdown creation](screen2.png)`
+
+* Result: `r x = 14 ; 5 / x`  
+From: ` r x = 14 ; 5/ x `
+
+
+<br><br>
+
+### GitHub
+Related file(s) can be found at <a href="https://github.com/eltownes/USF-LIS4370/tree/master/Module%2012">Git Me</a>
+<br><br>
+
